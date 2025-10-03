@@ -24,9 +24,9 @@ export default function GameBoard({ letters, onLetterClick }: GameBoardProps) {
             flex items-center justify-center w-28 h-28 border rounded-lg font-bold
             ${
               letter.state === "available"
-                ? "bg-gray-100 hover:bg-gray-200"
+                ? "bg-gray-100 hover:border-[#08eab3] text-[#eab308]"
                 : letter.state === "selected"
-                ? "bg-blue-500 text-white"
+                ? "bg-[#eab308] text-white"
                 : "bg-gray-400 text-white cursor-not-allowed"
             }
           `}

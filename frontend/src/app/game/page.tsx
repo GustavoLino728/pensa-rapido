@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Header from "@/components/Header";
 import GameBoard from "@/components/GameBoard";
 import WordInput from "@/components/WordInput";
+import PlayerPoints from "@/components/PlayersPoints";
 
 type LetterState = "available" | "selected" | "used";
 
@@ -46,6 +47,13 @@ export default function Game() {
   const [usedWords, setUsedWords] = useState<Set<string>>(new Set());
   const [isValidating, setIsValidating] = useState<boolean>(false);
   const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (selectedLetter && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [selectedLetter]);
 
   const handleLetterClick = (index: number) => {
     setLetters((prev) =>
@@ -73,7 +81,7 @@ export default function Game() {
       return newSet;
     });
     
-    // Desativa letra
+    
     setLetters(prev =>
       prev.map(l => 
         l.char === selectedLetter 
@@ -182,8 +190,9 @@ export default function Game() {
   };
 
   return (
-    <div className="bg-blue-100">
+    <div className="bg-[rgba(235,233,233,0.733)]">
       <Header></Header>
+      <PlayerPoints/>
       <GameBoard 
         letters={letters} 
         onLetterClick={handleLetterClick} 
@@ -191,6 +200,7 @@ export default function Game() {
       
       <WordInput
         word={currentWord}
+        inputRef={inputRef}
         onWordChange={setCurrentWord}
         onValidate={handleValidateWord}
         isValidating={isValidating}

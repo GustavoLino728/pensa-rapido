@@ -17,6 +17,7 @@ interface WordInputProps {
 
 export default function WordInput({ 
   word, 
+  inputRef,
   onWordChange, 
   onValidate, 
   isValidating, 
@@ -25,7 +26,7 @@ export default function WordInput({
 }: WordInputProps) {
   
   const getInputClassName = () => {
-    let baseClass = "border rounded px-4 py-2 flex-1 ";
+    let baseClass = "border border-[#eab308] rounded px-4 py-2 flex-1 text-black";
     
     if (!validationResult) {
       return baseClass + "border-gray-300";
@@ -49,7 +50,7 @@ export default function WordInput({
   return (
     <div className="p-4">
       {selectedLetter && (
-        <p className="mb-2 text-sm text-gray-600">
+        <p className="mb-2 text-sm text-black">
           Digite uma palavra que comece com: <strong>{selectedLetter}</strong>
         </p>
       )}
@@ -57,6 +58,12 @@ export default function WordInput({
       <div className="flex gap-2 mb-2">
         <input
           type="text"
+          ref={inputRef}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              onValidate();
+            }
+          }}
           value={word}
           onChange={(e) => onWordChange(e.target.value)}
           placeholder="Digite uma palavra"
@@ -70,7 +77,7 @@ export default function WordInput({
             px-4 py-2 rounded font-medium
             ${isValidating || !word.trim() || !selectedLetter
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-blue-500 text-white hover:bg-blue-600"
+              : "bg-[#eab308] text-[#b308ea] hover:bg-[#08eab3]"
             }
           `}
         >
@@ -80,7 +87,7 @@ export default function WordInput({
       
       {validationResult && (
         <div className={`
-          p-2 rounded text-sm
+          p-2 rounded text-sm 
           ${!validationResult.isValidStart 
             ? "bg-red-100 text-red-700" 
             : validationResult.isRealWord 
