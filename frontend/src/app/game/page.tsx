@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import GameBoard from "@/components/GameBoard";
 import WordInput from "@/components/WordInput";
 import PlayerPoints from "@/components/PlayersPoints";
+import { validadeWithGemini } from "@/api";
 
 type LetterState = "available" | "selected" | "used";
 
